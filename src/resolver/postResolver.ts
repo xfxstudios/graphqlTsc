@@ -1,6 +1,6 @@
 import {Arg, Args, Mutation, Query, Resolver} from "type-graphql";
 import { Post, PostArgs } from '../entity/post';
-import { getConnection } from 'typeorm';
+import { getConnection, createQueryBuilder } from 'typeorm';
 import { Comment } from '../entity/comment';
 import { NewPost } from '../inputs/newPost';
 const fetch = require('node-fetch');
@@ -21,15 +21,22 @@ export class PostResolver {
     }
 
     @Query(returns => [Post])
-    async getUserPosts(@Arg("userId") userId:String) {
+    async getUserPosts(@Arg("userId") userId:String, @Arg("take") take: number) {
         const con = await getConnection();
 
         const response = await con.getRepository(Post)
         .createQueryBuilder("post")
+        .leftJoinAndSelect("post.userId","post")
         .where("post.userId = :id", {id: userId})
         .getMany();
+        console.log(response);
+        
 
-        return response;
+        const nList = response.map(async (item, i) => {
+            return {...item, comments: await con.getRepository(Comment).createQueryBuilder("comment").where("comment.postId = :id",{id: item.id}).getMany()};
+        })
+
+        return nList;
     }
 
     @Query(returns => Post)

@@ -5,6 +5,8 @@ import { NewUser } from '../inputs/newUser';
 import { Company } from '../entity/company';
 import { Geo } from '../entity/geo';
 import { Address } from '../entity/address';
+import { Post } from '../entity/post';
+import {Comment} from "../entity/comment";
 
 @Resolver(User)
 export class UserResolver {
@@ -35,7 +37,18 @@ export class UserResolver {
             .where("user.id = :id", {id})
             .getOne();
 
-            return response
+            const post = await con.getRepository(Post)
+            .createQueryBuilder("post")
+            .where("post.userId = :id",{id:response.id})
+            .getMany();
+
+            const coment = await con.getRepository(Comment)
+            .createQueryBuilder("comment")
+            .where("comment.email = :email", { email: response.email})
+            .getMany();
+
+            return {...response, posts: post, comments: coment }
+
     }
 
     @Mutation(returns => User)

@@ -1,7 +1,9 @@
 import {Field, ObjectType} from 'type-graphql';
-import {Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, Unique} from 'typeorm';
+import {Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn} from 'typeorm';
 import { Address } from './address';
 import { Company } from './company';
+import { Post } from './post';
+import {Comment} from './comment';
 
 @ObjectType()
 @Entity()
@@ -54,5 +56,11 @@ export class User {
 
     @Column({type: "datetime", default: () => "CURRENT_TIMESTAMP"})
     updatedAt: String
+
+    @Field(type=>[Post])
+    posts: Post[]
+
+    @Field(type=>[Comment])
+    comments: Comment[]
 
 }

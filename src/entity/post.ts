@@ -1,7 +1,8 @@
 import {Max, Min} from "class-validator";
 import {ArgsType, Field, ObjectType} from "type-graphql";
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Comment} from "./comment";
+import { User } from './user';
 
 @ObjectType()
 @Entity()
@@ -31,9 +32,12 @@ export class Post {
 @ArgsType()
 export class PostArgs {
     @Field()
+    userId: number;
+
+    @Field()
     @Min(0)
     skip: number = 0;
-
+    
     @Field()
     @Min(1)
     @Max(50)

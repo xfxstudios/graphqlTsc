@@ -35,14 +35,13 @@ export class CommentResolve {
 
     @Query(returns => [Comment])
     async getCommentByEmail(@Arg("email") email: string) {
-        return new Promise((resolve, reject) => {
-            fetch('https://jsonplaceholder.typicode.com/comments?email='+email,)
-            .then((resp) => resp.json())
-            .then((data) => {
-                resolve(data)
-            })
-            .catch((err) => reject(err))
-        })
+            const con = await getConnection();
+            const response = con.getRepository(Comment)
+            .createQueryBuilder("comment")
+            .where("comment.email = :email",{email})
+            .getMany();
+
+            return response
     }
 
     @Mutation(returns => Comment)
