@@ -1,19 +1,31 @@
-import {Max, Min, min} from "class-validator";
+import {Max, Min} from "class-validator";
 import {ArgsType, Field, ObjectType} from "type-graphql";
+import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Comment} from "./comment";
 
 @ObjectType()
+@Entity()
 export class Post {
-    @Field()
-    userId: String;
 
     @Field()
+    @PrimaryGeneratedColumn()
     id: String;
 
     @Field()
+    @Column()
+    userId: String;
+
+    @Field()
+    @Column()
     title: String;
 
     @Field()
+    @Column()
     body: String;
+
+    @Field(type => [Comment])
+    comments: Comment[]
+    
 }
 
 @ArgsType()

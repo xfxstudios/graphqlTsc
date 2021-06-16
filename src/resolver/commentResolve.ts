@@ -1,5 +1,7 @@
-import {Arg, Query, Resolver} from "type-graphql";
+import {Arg, Args, Mutation, Query, Resolver} from "type-graphql";
 import { Comment } from '../entity/comment';
+import { NewComment } from '../inputs/newComment';
+import { getConnection } from 'typeorm';
 const fetch = require('node-fetch');
 
 @Resolver(Comment)
@@ -40,6 +42,26 @@ export class CommentResolve {
                 resolve(data)
             })
             .catch((err) => reject(err))
+        })
+    }
+
+    @Mutation(returns => Comment)
+    addComment(
+        @Arg("newComment") newComment: NewComment
+    ): Promise<Comment> {
+        return new Promise(async (resolve, reject) => {
+            const con = await getConnection();
+
+            const comment = new Comment();
+            comment.postId = newComment.postId;
+            comment.name = newComment.name;
+            comment.email = newComment.email;
+            comment.body = newComment.body;
+
+            const response = await con.manager.save(comment);
+
+            resolve(response);
+
         })
     }
 
