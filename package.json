@@ -1,0 +1,30 @@
+{
+    "name": "tsc",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "ts-node app.ts",
+        "start": "ts-node src/index.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "apollo-server": "^2.25.1",
+        "apollo-server-express": "^2.25.1",
+        "class-validator": "^0.13.1",
+        "graphql": "^15.5.0",
+        "mysql": "^2.14.1",
+        "node-fetch": "^2.6.1",
+        "reflect-metadata": "^0.1.10",
+        "ts-node": "^10.0.0",
+        "type-graphql": "^1.1.1",
+        "typeorm": "0.2.34"
+    },
+    "devDependencies": {
+        "@types/node": "^8.0.29",
+        "ts-node": "3.3.0",
+        "typescript": "3.3.3333"
+    }
+}
