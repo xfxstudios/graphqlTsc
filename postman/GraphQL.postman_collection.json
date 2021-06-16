@@ -6,14 +6,14 @@
 	},
 	"item": [
 		{
-			"name": "Get Users",
+			"name": "User - Get Users",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query{\r\n    getUsers{\r\n        id,\r\n        name,\r\n        company{\r\n            name\r\n        },\r\n        address{\r\n            city,\r\n            geo{\r\n                lat,\r\n                lng\r\n            }\r\n        }\r\n    }\r\n}",
+						"query": "query{\r\n    getUsers{\r\n        id,\r\n        name,\r\n        cedula,\r\n        phone,\r\n        genero,\r\n        company{\r\n            name\r\n        },\r\n        address{\r\n            city,\r\n            suite\r\n        }\r\n    }\r\n}",
 						"variables": ""
 					}
 				},
@@ -28,14 +28,153 @@
 			"response": []
 		},
 		{
-			"name": "get Posts",
+			"name": "User - New User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "DNT",
+						"value": "1"
+					},
+					{
+						"key": "Origin",
+						"value": "http://localhost:4000"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\r\n        addUser(newUser:{\r\n                name:\"Melissa\",\r\n                username:\"Castillo\",\r\n                email:\"melissacastillo3010@gmail.com\",\r\n                phone:\"+51942800799\",\r\n                website:\"nada\",\r\n                company_name:\"HITCEL\",\r\n                company_catchPhrase:\"HITCEL Company\",\r\n                company_bs:\"PEN\",\r\n                address_street:\"Pasaje 42\",\r\n                address_suite:\"2\",\r\n                address_city:\"Callao\",\r\n                address_zipcode:\"17007\",\r\n                cedula: \"14624982\",\r\n                genero: \"m\"\r\n            }\r\n        ){\r\n        id,\r\n        name,\r\n        email,\r\n        phone,\r\n        cedula,\r\n        company{\r\n            name,\r\n            bs\r\n        },\r\n        address{\r\n            city,\r\n            zipcode\r\n        }\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User - get User By Id",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query{\r\n    getPosts {\r\n        userId,\r\n        id,\r\n        title,\r\n        body\r\n    }\r\n}",
+						"query": "query{\r\n  getUserById(id:\"1\"){\r\n    id,\r\n    name,\r\n    username,\r\n    email,\r\n    address{\r\n      city,\r\n      geo{\r\n        lat,\r\n        lng\r\n      }\r\n    },\r\n    company{\r\n      name\r\n    }\r\n  }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "localhost:4000",
+					"host": [
+						"localhost"
+					],
+					"port": "4000"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Posts - get Posts",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query{\r\n    getPosts {\r\n        userId,\r\n        id,\r\n        title,\r\n        body,\r\n        comments{\r\n            id\r\n        }\r\n    }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "localhost:4000",
+					"host": [
+						"localhost"
+					],
+					"port": "4000"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Posts - get Post By Id with Comments",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query{\r\n    getPostById(id:\"2\"){\r\n        id,\r\n        userId,\r\n        body,\r\n        comments{\r\n            id,\r\n            name,\r\n            email,\r\n            body\r\n        }\r\n    }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "localhost:4000",
+					"host": [
+						"localhost"
+					],
+					"port": "4000"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Posts - new Post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation{\r\n  addPost(\r\n    newPost:{\r\n      userId:\"1\", \r\n      title:\"Este es otro nuevo Post\", \r\n      body:\"Este seria el cuerpo del nuevo posto\"\r\n    }),{\r\n      id,\r\n      userId,\r\n      body\r\n    }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "localhost:4000",
+					"host": [
+						"localhost"
+					],
+					"port": "4000"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Posts - Get posts by user Id",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query{\r\n  getUserPosts(userId:\"1\"){\r\n    id,\r\n    body\r\n  }\r\n}",
 						"variables": ""
 					}
 				},
@@ -72,14 +211,14 @@
 			"response": []
 		},
 		{
-			"name": "get User By Id",
+			"name": "Comment - new Comment",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query{\r\n  getUserById(id:\"1\"){\r\n    id,\r\n    name,\r\n    username,\r\n    email,\r\n    address{\r\n      city,\r\n      geo{\r\n        lat,\r\n        lng\r\n      }\r\n    },\r\n    company{\r\n      name\r\n    }\r\n  }\r\n}",
+						"query": "mutation{\r\n    addComment(newComment:{\r\n        postId: \"1\",\r\n        name: \"Carlos Quintero\",\r\n        email: \"carlosquintero@gmail.com\",\r\n        body: \"Este es otro comentario\"\r\n    }),{\r\n        id,\r\n        postId,\r\n        name,\r\n        email,\r\n        body\r\n    }\r\n}",
 						"variables": ""
 					}
 				},
@@ -89,57 +228,6 @@
 						"localhost"
 					],
 					"port": "4000"
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "New User",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Accept-Encoding",
-						"value": "gzip, deflate, br"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					},
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Connection",
-						"value": "keep-alive"
-					},
-					{
-						"key": "DNT",
-						"value": "1"
-					},
-					{
-						"key": "Origin",
-						"value": "http://localhost:4000"
-					}
-				],
-				"body": {
-					"mode": "graphql",
-					"graphql": {
-						"query": "mutation {\r\n        addUser(newUser:{\r\n                name:\"Emili\",\r\n                username:\"Castillo\",\r\n                email:\"emilycastillog1992@gmail.com\",\r\n                phone:\"41654298574\",\r\n                website:\"nada\",\r\n                company_name:\"FISIONATURAL\",\r\n                company_catchPhrase:\"FISIONATURALS Company\",\r\n                company_bs:\"USD\",\r\n                address_street:\"Pasaje 42\",\r\n                address_suite:\"2\",\r\n                address_city:\"Callao\",\r\n                address_zipcode:\"17007\"\r\n            }\r\n        ){\r\n        id,\r\n        name,\r\n        email\r\n    }\r\n}\r\n",
-						"variables": ""
-					}
-				},
-				"url": {
-					"raw": "http://localhost:4000/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						""
-					]
 				}
 			},
 			"response": []
