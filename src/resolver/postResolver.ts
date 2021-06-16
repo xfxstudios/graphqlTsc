@@ -10,12 +10,13 @@ export class PostResolver {
 
     @Query(restunrs => [Post])
     async getPosts(@Args() {skip, take}: PostArgs) {
-        return new Promise((resolve, reject) => {
-            fetch('https://jsonplaceholder.typicode.com/posts')
-            .then((resp) => resp.json())
-            .then((response) => {
-                resolve(response)
-            })
+        return new Promise(async (resolve, reject) => {
+            const con = getConnection();
+            const response = await con.getRepository(Post)
+            .createQueryBuilder("post")
+            .getMany();
+
+            resolve(response);
         })
     }
 
