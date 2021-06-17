@@ -63,23 +63,23 @@ export class UserResolver {
                 const con = getConnection();
     
                 await con.transaction(async TransactionManager => {
-                    const company = new Company();
-                    company.name = newUser.company_name;
+                    const company       = new Company();
+                    company.name        = newUser.company_name;
                     company.catchPhrase = newUser.company_catchPhrase,
-                    company.bs = newUser.company_bs;
+                    company.bs          = newUser.company_bs;
                     await TransactionManager.save(company);
         
                     const geo = new Geo();
-                    geo.lat = "";
-                    geo.lng = "";
+                    geo.lat   = "";
+                    geo.lng   = "";
                     await TransactionManager.save(geo);
         
-                    const address = new Address();
-                    address.street = newUser.address_street;
-                    address.suite = newUser.address_suite;
-                    address.city = newUser.address_city;
+                    const address   = new Address();
+                    address.street  = newUser.address_street;
+                    address.suite   = newUser.address_suite;
+                    address.city    = newUser.address_city;
                     address.zipcode = newUser.address_zipcode;
-                    address.geo = geo;
+                    address.geo     = geo;
                     await TransactionManager.save(address);
         
                     const nUser    = new User();
@@ -88,13 +88,13 @@ export class UserResolver {
                     nUser.email    = newUser.email;
                     nUser.phone    = newUser.phone;
                     nUser.website  = newUser.website;
-                    nUser.cedula = newUser.cedula;
-                    nUser.genero = newUser.genero;
-                    nUser.company = company;
-                    nUser.address = address;
-                    const user = await TransactionManager.save(nUser);
+                    nUser.cedula   = newUser.cedula;
+                    nUser.genero   = newUser.genero;
+                    nUser.company  = company;
+                    nUser.address  = address;
+                    const user     = await TransactionManager.save(nUser);
                     
-                    resolve(user);
+                    resolve(this.getUserById(user.id.toString()));
                 })
 
             }catch(err) {

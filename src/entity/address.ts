@@ -5,6 +5,7 @@ import { Geo } from './geo';
 @ObjectType()
 @Entity()
 export class Address {
+    @Field()
     @PrimaryGeneratedColumn()
     id: String;
 
