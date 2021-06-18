@@ -52,7 +52,7 @@ export class CommentResolve {
             const con = await getConnection();
 
             const comment = new Comment();
-            comment.postId = newComment.postId;
+            comment.post = newComment.post;
             comment.name = newComment.name;
             comment.email = newComment.email;
             comment.body = newComment.body;

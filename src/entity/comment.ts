@@ -1,5 +1,7 @@
 import {Field, ObjectType} from "type-graphql";
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import { User } from './user';
+import { Post } from './post';
 
 @ObjectType()
 @Entity()
@@ -10,7 +12,8 @@ export class Comment {
 
     @Field()
     @Column()
-    postId: String;
+    @ManyToOne(()=> Post, post => post.id)
+    post: String;
 
     @Field()
     @Column()

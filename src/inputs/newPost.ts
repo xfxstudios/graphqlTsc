@@ -3,7 +3,7 @@ import {Field, InputType} from "type-graphql";
 @InputType()
 export class NewPost {
     @Field()
-    userId: String;
+    user: String;
 
     @Field()
     title: String;

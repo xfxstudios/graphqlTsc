@@ -1,12 +1,10 @@
 import {Arg, Ctx, Mutation, Query, Resolver} from "type-graphql";
-import { getConnection, TransactionManager } from 'typeorm';
+import { getConnection } from 'typeorm';
 import { User } from '../entity/user';
 import { NewUser } from '../inputs/newUser';
 import { Company } from '../entity/company';
 import { Geo } from '../entity/geo';
 import { Address } from '../entity/address';
-import { Post } from '../entity/post';
-import {Comment} from "../entity/comment";
 
 @Resolver(User)
 export class UserResolver {
@@ -19,6 +17,8 @@ export class UserResolver {
         .leftJoinAndSelect("user.company","company")
         .leftJoinAndSelect("user.address","address")
         .leftJoinAndSelect("address.geo","geo")
+        .leftJoinAndSelect("user.posts","posts")
+        .leftJoinAndSelect("posts.comments","comments")
         .getMany();
         
         return response
@@ -34,20 +34,12 @@ export class UserResolver {
             .leftJoinAndSelect("user.company","company")
             .leftJoinAndSelect("user.address","address")
             .leftJoinAndSelect("address.geo","geo")
+            .leftJoinAndSelect("user.posts","posts")
+            .leftJoinAndSelect("posts.comments","comments")
             .where("user.id = :id", {id})
             .getOne();
 
-            const post = await con.getRepository(Post)
-            .createQueryBuilder("post")
-            .where("post.userId = :id",{id:response.id})
-            .getMany();
-
-            const coment = await con.getRepository(Comment)
-            .createQueryBuilder("comment")
-            .where("comment.email = :email", { email: response.email})
-            .getMany();
-
-            return {...response, posts: post, comments: coment }
+            return response
 
     }
 

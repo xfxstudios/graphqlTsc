@@ -58,9 +58,7 @@ export class User {
     updatedAt: String
 
     @Field(type=>[Post])
+    @OneToMany(()=>Post, post => post.user)
     posts: Post[]
-
-    @Field(type=>[Comment])
-    comments: Comment[]
 
 }

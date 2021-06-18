@@ -4,7 +4,7 @@ import { InputType, Field } from 'type-graphql';
 export class NewComment{
 
     @Field()
-    postId: String;
+    post: String;
 
     @Field()
     name: String;

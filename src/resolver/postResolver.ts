@@ -14,6 +14,8 @@ export class PostResolver {
             const con = getConnection();
             const response = await con.getRepository(Post)
             .createQueryBuilder("post")
+            .leftJoinAndSelect("post.user","user")
+            .leftJoinAndSelect("post.comments","comments")
             .getMany();
 
             resolve(response);
@@ -26,17 +28,13 @@ export class PostResolver {
 
         const response = await con.getRepository(Post)
         .createQueryBuilder("post")
-        .leftJoinAndSelect("post.userId","post")
-        .where("post.userId = :id", {id: userId})
+        .leftJoinAndSelect("post.user","user")
+        .leftJoinAndSelect("post.comments","comments")
+        .where("post.user = :id", {id: userId})
         .getMany();
-        console.log(response);
         
+        return response;
 
-        const nList = response.map(async (item, i) => {
-            return {...item, comments: await con.getRepository(Comment).createQueryBuilder("comment").where("comment.postId = :id",{id: item.id}).getMany()};
-        })
-
-        return nList;
     }
 
     @Query(returns => Post)
@@ -45,16 +43,12 @@ export class PostResolver {
         const con = await getConnection();
         const response = await con.getRepository(Post)
         .createQueryBuilder("post")
+        .leftJoinAndSelect("post.user","user")
+        .leftJoinAndSelect("post.comments","comments")
         .where("post.id = :id", {id})
         .getOne();
-        
-        
-        const comment = await con.getRepository(Comment)
-        .createQueryBuilder("comment")
-        .where("comment.postId = :id", {id: response.id})
-        .getMany();
 
-        const out = {...response, comments: comment}
+        const out = response;
 
         return out
     }
@@ -67,7 +61,7 @@ export class PostResolver {
             const con = await getConnection();
 
             const post = new Post();
-            post.userId = newPost.userId;
+            post.user = newPost.user;
             post.title = newPost.title;
             post.body = newPost.body;
 

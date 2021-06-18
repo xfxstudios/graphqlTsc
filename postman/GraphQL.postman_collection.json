@@ -13,7 +13,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query{\r\n    getUsers{\r\n        id,\r\n        name,\r\n        cedula,\r\n        phone,\r\n        genero,\r\n        company{\r\n            name\r\n        },\r\n        address{\r\n            city,\r\n            suite\r\n        }\r\n    }\r\n}",
+						"query": "query{\r\n  getUsers{\r\n    id, \r\n    name,\r\n    posts{\r\n      id,\r\n      body\r\n      comments{\r\n        email,\r\n        body\r\n      }\r\n    }\r\n  }\r\n}",
 						"variables": ""
 					}
 				},
@@ -60,7 +60,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "mutation {\r\n        addUser(newUser:{\r\n                name:\"Melissa\",\r\n                username:\"Castillo\",\r\n                email:\"melissacastillo3010@gmail.com\",\r\n                phone:\"+51942800799\",\r\n                website:\"nada\",\r\n                company_name:\"HITCEL\",\r\n                company_catchPhrase:\"HITCEL Company\",\r\n                company_bs:\"PEN\",\r\n                address_street:\"Pasaje 42\",\r\n                address_suite:\"2\",\r\n                address_city:\"Callao\",\r\n                address_zipcode:\"17007\",\r\n                cedula: \"14624982\",\r\n                genero: \"m\"\r\n            }\r\n        ){\r\n        id,\r\n        name,\r\n        email,\r\n        phone,\r\n        cedula,\r\n        company{\r\n            name,\r\n            bs\r\n        },\r\n        address{\r\n            city,\r\n            zipcode\r\n        }\r\n    }\r\n}\r\n",
+						"query": "mutation {\r\n        addUser(newUser:{\r\n                name:\"Marcos\",\r\n                username:\"Hernandez\",\r\n                email:\"marcosdho@gmail.com\",\r\n                phone:\"+5721548754\",\r\n                website:\"nada\",\r\n                company_name:\"GOIAR\",\r\n                company_catchPhrase:\"GOIAR\",\r\n                company_bs:\"COP\",\r\n                address_street:\"Pasaje 42\",\r\n                address_suite:\"2\",\r\n                address_city:\"Callao\",\r\n                address_zipcode:\"17007\",\r\n                cedula: \"16401771\",\r\n                genero: \"m\"\r\n            }\r\n        ){\r\n        id,\r\n        name,\r\n        email,\r\n        phone,\r\n        cedula,\r\n        company{\r\n            name,\r\n            bs\r\n        },\r\n        address{\r\n            city,\r\n            zipcode,\r\n            geo{\r\n                lat, lng\r\n            }\r\n        }\r\n    }\r\n}\r\n",
 						"variables": ""
 					}
 				},
@@ -86,7 +86,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query{\r\n  getUserById(id:\"3\"){\r\n    id,\r\n    name,\r\n    email,\r\n    posts{\r\n      id,\r\n      body\r\n    },\r\n    comments{\r\n      id,\r\n      postId,\r\n      body\r\n    }\r\n  }\r\n}",
+						"query": "query{\r\n  getUserById(id:\"1\"){\r\n    id,\r\n    name,\r\n    email,\r\n    phone,\r\n    address{\r\n        id,\r\n        city,\r\n        zipcode,\r\n        geo{\r\n            lat, lng\r\n        }\r\n    }\r\n    posts{\r\n      id,\r\n      body,\r\n      comments{\r\n          id, body\r\n      }\r\n    }\r\n  }\r\n}",
 						"variables": ""
 					}
 				},
@@ -108,7 +108,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query{\r\n    getPosts {\r\n        userId,\r\n        id,\r\n        title,\r\n        body\r\n    }\r\n}",
+						"query": "query{\r\n  getPosts{\r\n    id,\r\n    body,\r\n    comments{\r\n      id,\r\n      email,\r\n      body\r\n    }\r\n  }\r\n}",
 						"variables": ""
 					}
 				},
@@ -130,7 +130,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query{\r\n    getPostById(id:\"1\"){\r\n        id,\r\n        userId,\r\n        body,\r\n        comments{\r\n            id,\r\n            name,\r\n            body\r\n        }\r\n    }\r\n}",
+						"query": "query{\r\n    getPostById(id:\"5\"){\r\n        id,\r\n        body,\r\n        user{\r\n          id\r\n        },\r\n      comments{\r\n        id,\r\n        email,\r\n        body\r\n      }\r\n    }\r\n}",
 						"variables": ""
 					}
 				},
@@ -152,7 +152,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "mutation{\r\n  addPost(\r\n    newPost:{\r\n      userId:\"1\", \r\n      title:\"Este es otro nuevo Post\", \r\n      body:\"Este seria el cuerpo del nuevo posto\"\r\n    }),{\r\n      id,\r\n      userId,\r\n      body\r\n    }\r\n}",
+						"query": "mutation{\r\n  addPost(\r\n    newPost:{\r\n      user:\"1\", \r\n      title:\"Trabajo con GraphQL\", \r\n      body:\"Como debes trabajar con GraphQL en NodeJS\"\r\n    }),{\r\n      id,\r\n      user,\r\n      body\r\n    }\r\n}",
 						"variables": ""
 					}
 				},
@@ -218,7 +218,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "mutation{\r\n    addComment(newComment:{\r\n        postId: \"1\",\r\n        name: \"Saul Brito\",\r\n        email: \"sauleb1992@gmail.com\",\r\n        body: \"Este es un comentario de Saul\"\r\n    }),{\r\n        id,\r\n        name,\r\n        email,\r\n        body\r\n    }\r\n}",
+						"query": "mutation{\r\n    addComment(newComment:{\r\n        post: \"6\",\r\n        name: \"Saul Brito\",\r\n        email: \"sauleb1992@gmail.com\",\r\n        body: \"Este es otr comentario de Saul\"\r\n    }),{\r\n        id,\r\n        name,\r\n        email,\r\n        body\r\n    }\r\n}",
 						"variables": ""
 					}
 				},

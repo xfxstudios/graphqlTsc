@@ -1,6 +1,6 @@
 import {Max, Min} from "class-validator";
 import {ArgsType, Field, ObjectType} from "type-graphql";
-import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, JoinColumn, OneToMany } from 'typeorm';
 import {Comment} from "./comment";
 import { User } from './user';
 
@@ -12,9 +12,10 @@ export class Post {
     @PrimaryGeneratedColumn()
     id: String;
 
-    @Field()
-    @Column()
-    userId: String;
+    @Field(type=>User)
+    @ManyToOne(()=>User, user => user.id)
+    @JoinColumn()
+    user: String;
 
     @Field()
     @Column()
@@ -25,14 +26,13 @@ export class Post {
     body: String;
 
     @Field(type => [Comment])
+    @OneToMany(()=>Comment, comment => comment.post)
     comments: Comment[]
     
 }
 
 @ArgsType()
 export class PostArgs {
-    @Field()
-    userId: number;
 
     @Field()
     @Min(0)

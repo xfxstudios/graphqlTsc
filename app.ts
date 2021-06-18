@@ -6,6 +6,7 @@ import { buildSchema } from 'type-graphql';
 import { UserResolver, PostResolver, PhotoResolver } from './src/resolver';
 import { CommentResolve } from './src/resolver/commentResolve';
 import { createConnection } from 'typeorm';
+import { AddressResolver } from './src/resolver/addressResolver';
 
 const PORT = process.env.PORT || 4000;
 
@@ -14,7 +15,7 @@ async function bootstrap() {
     await createConnection();
 
     const schema = await buildSchema({
-        resolvers: [UserResolver, PostResolver, PhotoResolver, CommentResolve]
+        resolvers: [UserResolver, PostResolver, PhotoResolver, CommentResolve, AddressResolver]
     });
 
     const server = new ApolloServer({
