@@ -1,4 +1,4 @@
-import {Arg, Args, Mutation, Query, Resolver} from "type-graphql";
+import {Arg, Mutation, Query, Resolver} from "type-graphql";
 import { Comment } from '../entity/comment';
 import { NewComment } from '../inputs/newComment';
 import { getConnection } from 'typeorm';

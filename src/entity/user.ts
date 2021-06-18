@@ -3,7 +3,6 @@ import {Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn}
 import { Address } from './address';
 import { Company } from './company';
 import { Post } from './post';
-import {Comment} from './comment';
 
 @ObjectType()
 @Entity()

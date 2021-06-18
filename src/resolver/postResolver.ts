@@ -1,6 +1,6 @@
 import {Arg, Args, Mutation, Query, Resolver} from "type-graphql";
 import { Post, PostArgs } from '../entity/post';
-import { getConnection, createQueryBuilder } from 'typeorm';
+import { getConnection } from 'typeorm';
 import { Comment } from '../entity/comment';
 import { NewPost } from '../inputs/newPost';
 const fetch = require('node-fetch');
