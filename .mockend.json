@@ -11,6 +11,7 @@
         "post": "Post"
     },
     "Company":{
+        "name":"string",
         "createdAt": "date"
     }
 }
