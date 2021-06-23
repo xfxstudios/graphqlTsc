@@ -67,7 +67,7 @@ export class PostResolver {
 
             const response = await con.manager.save(post);
 
-            resolve(response);
+            resolve(this.getPostById(response.id));
         })
     }
 
