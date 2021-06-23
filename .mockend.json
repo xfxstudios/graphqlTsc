@@ -12,6 +12,7 @@
     },
     "Company":{
         "name":"string",
+        "city":"string",
         "createdAt": "date"
     }
 }
